@@ -33,6 +33,8 @@ for i in range(1000):
   sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
 
+#Precision de la Red entrenada:
+
 #Evaluamos el acierto del programa (True o False)
 correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
 #Los valores True o False los convertimos a 1 o 0 respectivamente
