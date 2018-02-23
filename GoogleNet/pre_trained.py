@@ -1,14 +1,14 @@
+from __future__ import print_function
 import tensorflow as tf
-import numpy as np
-import scipy.misc
 import argparse
 
 from tensorcv.dataflow.image import ImageFromFile
 
-import setup_env as conf
-from googlenet import GoogleNet
-from classes import get_word_list
-from preprocess import resize_image_with_smallest_side, center_crop_image
+import utils.setup_env as conf
+from model.googlenet import GoogleNet
+from utils.classes import get_word_list
+from utils.preprocess import resize_image_with_smallest_side
+
 
 
 
@@ -39,8 +39,6 @@ if __name__ == '__main__':
     test_data = ImageFromFile(FLAGS.type,
                               data_dir=conf.DATA_DIR,
                               num_channel=3)
-    display_data(test_data, 'test_data')
-
     word_dict = get_word_list('data/imageNetLabel.txt')
 
     model.create_model([image, 1])
@@ -53,17 +51,16 @@ if __name__ == '__main__':
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         writer.add_graph(sess.graph)
-
+        a = 0
         for k in range(0, 50):
             if test_data.epochs_completed < 1:
+                print("***** Imagen:", a + 1, '*****  --> ', test_data._im_list[a], a)
                 batch_data = test_data.next_batch()
                 im = batch_data[0]
                 im = resize_image_with_smallest_side(im, 224)
-                # im = center_crop_image(im, 224, 224)
-                # scipy.misc.imsave('{}test_{}.png'.format(conf.SAVE_DIR, k),
-                #                   np.squeeze(im))
                 result = sess.run(test_op, feed_dict={image: im})
                 for val, ind in zip(result.values, result.indices):
-                    print(val)
-                    print(ind)
-                    print(word_dict[ind[0]])
+                    a = a + 1
+                    for i in range(0,5):
+                            print("Con un ",val[i],"% es un ", word_dict[ind[i]], sep='')
+                    print("******************************")
