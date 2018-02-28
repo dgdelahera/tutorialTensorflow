@@ -19,8 +19,11 @@ def main(unused_argv):
   # train_labels = np.asarray(mnist.train.labels, dtype=np.int32)
   # eval_data = mnist.test.images  # Returns np.array
   # eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)
+  
+  # Descomentar estas dos lineas y comentar la siguiente si se quiere introducir varias imagenes a la vez
   # filelist = glob.glob("MNIST-data/PREDICT/*.png")
   # predict_data = np.array([np.array(Image.open(fname)) for fname in filelist], dtype='f')
+  
   image = Image.open("MNIST-data/PREDICT/my3.png")
 
   if image.size > (28, 28):
