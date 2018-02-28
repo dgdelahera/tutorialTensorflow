@@ -26,6 +26,7 @@ def main(unused_argv):
   
   image = Image.open("MNIST-data/PREDICT/my3.png")
 
+  # Si hay que tratar la imagen para dejarla en el formato MINST, hay que usar estos métodos. En caso contrario, comentarlos
   if image.size > (28, 28):
       image_28 = resizeimage.resize_thumbnail(image, [28, 28])
    #   print(np.array(image_28, dtype='f').shape)
@@ -39,8 +40,8 @@ def main(unused_argv):
 
       aa = np.uint8(image_TOTAL)
       im = Image.fromarray(aa)
+      #Se guarda la imagen en formato MNIST
       im.save('MNIST-data/PREDICT/ejecutado3.png')
-
       predict_data= np.array(image_TOTAL, dtype='f')
 
   # Create the Estimator
